@@ -7,26 +7,26 @@ Team 8123's Junior Design project
 Release Notes
 
 V 0.2.0
-Fully setup Login page
-Ability to create an account on the web application
-Ability for user to log into their account
+- Fully setup Login page
+- Ability to create an account on the web application
+- Ability for user to log into their account
 
 V 0.4.0
-Ability for a user to link their spotify account to their web application
-Ability for user to add a song onto the website
-Ability for user to add an emotion along with a song
-Ability to view a list of all uploaded songs 
+- Ability for a user to link their spotify account to their web application
+- Ability for user to add a song onto the website
+- Ability for user to add an emotion along with a song
+- Ability to view a list of all uploaded songs 
 V 0.6.0
-Ability to play songs from the website
-Users can vote on songs from the website
-Ability to filter music based on genre
+- Ability to play songs from the website
+- Users can vote on songs from the website
+- Ability to filter music based on genre
 V 0.8.0
-Ability to add a song from the website onto your personal spotify
-Web application will create a new spotify playlist to populate with songs
-Ability to sort songs by popularity
+- Ability to add a song from the website onto your personal spotify
+- Web application will create a new spotify playlist to populate with songs
+- Ability to sort songs by popularity
 V 1.0.0
-Ability to see what other users are listening to based on the user’s preference 
-Suggests similar songs to the user
+- Ability to see what other users are listening to based on the user’s preference 
+- Suggests similar songs to the user
 
 
 
@@ -34,18 +34,18 @@ Suggests similar songs to the user
 Install Guide
 
 
-Pre-requisites
-Amazon Web Services Account
-Spotify Developer account (premium recommended)
-Github account (optional)
+Pre-requisites:
+- Amazon Web Services Account
+- Spotify Developer account (premium recommended)
+- Github account (optional)
 
 
-Dependent libraries that must be installed
+Dependent libraries that must be installed:
 As our code runs entirely on HTML and Javascript there are no dependant libraries that need to be installed.
 
 
 
-Download instructions
+Download instructions:
 Download the github repository here:
 https://github.com/thanhanle/Musical-Artifact
 
@@ -54,28 +54,31 @@ https://github.com/thanhanle/Musical-Artifact
 
 
 
-Installation of actual application
-Host the website
-Setup the AWS API
-Lambda
-GTMSongs
-GTMPlay
-GTMLogin
-DynamoDB
-Create tables
-userPosts
-topChart
-musicUsers
-API Gateway
-Create Endpoint
-GTMLogin
-GTMPLay
-GTMSOngs
-Setup the Spotify
-Create account
+Installation of actual application:
+1. Host the website
+2. Setup the AWS API
+    -Lambda
+        -GTMSongs
+        -GTMPlay
+        -GTMLogin
+    -DynamoDB
+        -Create tables
+	     -userPosts
+	     -topChart
+	     -musicUsers
+     -API Gateway
+        -Create Endpoint
+              -GTMLogin
+	      -GTMPLay
+	      -GTMSOngs
+3.Setup the Spotify
+     -Create account
+
 
 In order to set up the AWS API, you first need to create three lambda functions GTMSongs, GTMPlay, and GTMLogin. Functions related to songs, such as posting songs, upvoting songs, and putting an emotion on the songs will be in the GTMSongs lambda. Functions related to logging into the website will be in GTMLogin lambda. Functions related to playing the songs to preview before upvoting will be in GTMPlay lambda. 
+
 Next, in the DynamoDB part of AWS, you need to create three tables, userPosts, topChart, and musicUsers, make sure these are named exactly as we typed them. userPosts include data about what exactly the user posts: SongID, Artists, Emotion. topChart includes data about the top 100 charts of the whole list. musicUsers include data about the users of the website such as their username, hashed password, access token, etc… 
+
 API gateway needs to define every endpoint on the API that Buzzy Beats use. This requires you to create a new API and for every resource, link it to the proper lambda function. For GTMLogin, you will need /getuserinfo, /linkspotify, /login, and /register. Point all of these to the GTMLogin lambda function. For GTMSongs, you will need /addToPlaylist, /post, /search, /topCharts. For GTMPlay you will need /accesstoken and /play. Make sure you deploy the API after these changes. Now you should be able to access the API by going to the endpoint + /GTMLogin/login and so on.
 
 5. Setup Spotify
@@ -89,12 +92,12 @@ API gateway needs to define every endpoint on the API that Buzzy Beats use. This
 
 
 
-Run instructions
+Run instructions:
 	There is no specific instruction to run this software, because it’s simply a url to the login page. Just visit the location where the website is hosted, register an account, link your spotify, and start posting songs!
 
-Troubleshooting
-If the API responds with Missing Authentication Token, you need to make sure the API Gateway is linked to the Lambda function correctly and you hit deploy on the API.
-If the response is Internal Server Error, check the logs for the where the lambda is crashing. This might be with the way you set up the Database or Spotify may be failing.
-If you login and get immediately redirected to login, login again. This is because you were previously logged into another system and unfortunately our system doesn’t allow you to be logged into two places at once due to Spotify’s playback restrictions.
-If website is loading slow, increase the read capacity units. It should be fine with the default, but as the website becomes popular it may start to cost money.
+Troubleshooting:
+- If the API responds with Missing Authentication Token, you need to make sure the API Gateway is linked to the Lambda function correctly and you hit deploy on the API.
+- If the response is Internal Server Error, check the logs for the where the lambda is crashing. This might be with the way you set up the Database or Spotify may be failing.
+- If you login and get immediately redirected to login, login again. This is because you were previously logged into another system and unfortunately our system doesn’t allow you to be logged into two places at once due to Spotify’s playback restrictions.
+- If website is loading slow, increase the read capacity units. It should be fine with the default, but as the website becomes popular it may start to cost money.
 
