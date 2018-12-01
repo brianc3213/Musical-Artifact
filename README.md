@@ -56,36 +56,20 @@ https://github.com/thanhanle/Musical-Artifact
 
 Installation of actual application:
 1. Host the website
-2. Setup the AWS API
-    -Lambda
-        -GTMSongs
-        -GTMPlay
-        -GTMLogin
-    -DynamoDB
-        -Create tables
-	     -userPosts
-	     -topChart
-	     -musicUsers
-     -API Gateway
-        -Create Endpoint
-              -GTMLogin
-	      -GTMPLay
-	      -GTMSOngs
-3.Setup the Spotify
-     -Create account
 
 
-In order to set up the AWS API, you first need to create three lambda functions GTMSongs, GTMPlay, and GTMLogin. Functions related to songs, such as posting songs, upvoting songs, and putting an emotion on the songs will be in the GTMSongs lambda. Functions related to logging into the website will be in GTMLogin lambda. Functions related to playing the songs to preview before upvoting will be in GTMPlay lambda. 
+2. In order to set up the AWS API, you first need to create three lambda functions GTMSongs, GTMPlay, and GTMLogin. Functions related to songs, such as posting songs, upvoting songs, and putting an emotion on the songs will be in the GTMSongs lambda. Functions related to logging into the website will be in GTMLogin lambda. Functions related to playing the songs to preview before upvoting will be in GTMPlay lambda. 
 
 Next, in the DynamoDB part of AWS, you need to create three tables, userPosts, topChart, and musicUsers, make sure these are named exactly as we typed them. userPosts include data about what exactly the user posts: SongID, Artists, Emotion. topChart includes data about the top 100 charts of the whole list. musicUsers include data about the users of the website such as their username, hashed password, access token, etc… 
 
 API gateway needs to define every endpoint on the API that Buzzy Beats use. This requires you to create a new API and for every resource, link it to the proper lambda function. For GTMLogin, you will need /getuserinfo, /linkspotify, /login, and /register. Point all of these to the GTMLogin lambda function. For GTMSongs, you will need /addToPlaylist, /post, /search, /topCharts. For GTMPlay you will need /accesstoken and /play. Make sure you deploy the API after these changes. Now you should be able to access the API by going to the endpoint + /GTMLogin/login and so on.
 
-5. Setup Spotify
+
+3. Setup Spotify
 	Open developer.spotify.com and navigate to the Dashboard. You will need to create a new Client ID. Enter the information for Buzzy Beats. Once you have a Client ID, click to show the Client Secret. Save these two values.
 	Go back into the lambda functions and where you see client_id and client_secret at the top of every file, replace that value with your own client id and secret. Do this for every file in every Lambda function. While you are here, check to see if the lambda functions are connected to the API gateway.
 
-6. Hosting the website files.
+4. Hosting the website files.
 	The website runs on pages of HTML with JavaScript embedded. You will need to go into the HTML and change the APIADDRESS at the top of each page. You will then need to upload the files to a website hosting service. This could be either AWS S3 with their static hosting websites or Github Pages. For S3, create a new bucket and then upload all files in the repository. After that, go in to properties and then enable static website hosting. The endpoint listed will now be your website.  For Github, just create a new repository, upload the files and enable Github Pages in the settings. Grab the address of the website either from S3 or Github and save it. You will need to connect the domain you are using and point it to this address. If you choose not to use a domain, yo can still access all functionality from this address.
 	Take either the domain or address or however you plan on hosting the website and go back to the Spotify dashboard. Click Edit Settings and fill in the website address. You will also need to put the address in the redirect uri. This should be the website address + /streaming.html. Such as “https://www.buzzybeats/streaming.html”. Click save and the website should be able to play from Spotify and authenticate users.
 
